@@ -37,8 +37,6 @@ function getWaitingRow(){
 function getResult($query){
   global $wf;
 
-  file_put_contents("getResult.log", $query, FILE_APPEND);
-
   $default_currency = "DKK";
   //$currencies = array("DKK", "EUR", "USD", "SEK", "GBP", "CHF", "AUD", "NOK");
 
