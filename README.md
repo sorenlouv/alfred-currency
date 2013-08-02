@@ -12,7 +12,7 @@ The default currency is DKK (can be changed) so the following will will convert 
 Another shorthand is:
 > 30$ to €
 
-And even shorter:
+And even shorter: 
 > 30$ €
 
 Author
