@@ -7,16 +7,7 @@
 	<key>connections</key>
 	<dict>
 		<key>63F60794-BB56-4415-9372-BAF974C3A7E1</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>B8FFA3AB-AD7D-4316-A84F-5958A671D4FF</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
+		<array/>
 	</dict>
 	<key>createdby</key>
 	<string>Søren Louv-Jansen</string>
@@ -60,19 +51,6 @@ echo getResult($query);</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>searcher</key>
-				<integer>1635215215</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.systemwebsearch</string>
-			<key>uid</key>
-			<string>B8FFA3AB-AD7D-4316-A84F-5958A671D4FF</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
 	</array>
 	<key>readme</key>
 	<string>Currency Converter is a workflow for Alfred App on Mac.
@@ -91,11 +69,6 @@ And even shorter:
 	<key>uidata</key>
 	<dict>
 		<key>63F60794-BB56-4415-9372-BAF974C3A7E1</key>
-		<dict>
-			<key>ypos</key>
-			<real>60</real>
-		</dict>
-		<key>B8FFA3AB-AD7D-4316-A84F-5958A671D4FF</key>
 		<dict>
 			<key>ypos</key>
 			<real>60</real>
