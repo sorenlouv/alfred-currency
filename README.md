@@ -15,6 +15,18 @@ Another shorthand is:
 And even shorter: 
 > 30$ €
 
+Installation
+=========
+[Download](https://github.com/sqren/alfred-currency/raw/master/Currency%20Converter.alfredworkflow) and open the workflow file
+
+Requirements
+=========
+  You must installed:
+
+ - [Alfred 2.0](http://www.alfredapp.com/) or higher
+ - [Alfred PowerPack](http://www.alfredapp.com/powerpack/)
+
+
 Author
 =======
-Søren Louv-Jansen, Konscript
+Søren Louv-Jansen, [Konscript](http://www.konscript.com)
