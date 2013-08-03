@@ -29,4 +29,4 @@ Requirements
 
 Author
 =======
-Søren Louv-Jansen, Konscript
+Søren Louv-Jansen, [Konscript](http://www.konscript.com)
