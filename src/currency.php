@@ -34,10 +34,8 @@ function getWaitingRow(){
   $wf->result(time(), "Waiting for input", "Waiting for input...", "Type in like: 50USD to EUR", 'icon.png');
 }
 
-function getResult($query){
+function getResult($query, $default_currency){
   global $wf;
-
-  $default_currency = "DKK";
 
   // Replace symbols
   $query = str_replace(

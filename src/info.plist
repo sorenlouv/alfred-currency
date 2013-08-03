@@ -27,14 +27,19 @@
 				<key>escaping</key>
 				<integer>36</integer>
 				<key>keyword</key>
-				<string>v</string>
+				<string>c</string>
 				<key>runningsubtext</key>
 				<string>Please wait while I fetch the newest exchange rates</string>
 				<key>script</key>
-				<string>require_once('currency.php');
+				<string>// Type your default currency below. 
+// Must be in the official three-letter format
+// Eg. EUR, USD, GBP
+$default_currency = "DKK";
 
+// ======= DO NOT EDIT BELOW THIS LINE ======
+require_once('currency.php');
 $query = "{query}";
-echo getResult($query);</string>
+echo getResult($query, $default_currency);</string>
 				<key>subtext</key>
 				<string>Easily convert between currencies</string>
 				<key>title</key>
