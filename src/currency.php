@@ -6,7 +6,7 @@ function getRow($currency_from, $currency_to, $amount){
   global $wf;
 
   // build URL
-  $url = "http://rate-exchange.appspot.com/currency?from=" . $currency_from . "&to=" . $currency_to;
+  $url = "http://api.fixer.io/latest?base=" . strtoupper($currency_from) . "&symbols=" . strtoupper($currency_to);
 
   // get exchange rate
   $data_json = file_get_contents($url);
@@ -19,7 +19,8 @@ function getRow($currency_from, $currency_to, $amount){
 
   // No problems
   }else{
-    $exchange_rate = $data->rate;
+    // print_r($data);
+    $exchange_rate = $data->rates->$currency_to;
 
     $clipboard = round($exchange_rate * $amount, 1);
     $text = round($exchange_rate * $amount, 1) . " " . $currency_to;
@@ -44,15 +45,23 @@ function getResult($query, $default_currency){
     $query
   );
 
-  // strip " to "
-  $query = str_replace(" to ", " ", $query);
+  // uppercase
+  $query = strtoupper($query);
 
-  // Uppercase and trim
-  $query = strtoupper(trim($query));
+  // strip " to "
+  $query = str_replace(" TO ", " ", $query);
+  $query = str_replace(" IN ", " ", $query);
+
+  // trim
+  $query = trim($query);
+
+  // print_r('>>> query');
+  // print_r($query);
 
   // parse query
-  preg_match("/^(\d+)([A-Z]{3})\s?([A-Z]{3})?$/", $query, $matches);
+  preg_match("/^(\d+)\s?([A-Z]{3})\s?([A-Z]{3})?$/", $query, $matches);
 
+  // print_r('>>> matches');
   // print_r($matches);
   if(!empty($matches)){
 
