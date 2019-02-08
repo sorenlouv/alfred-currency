@@ -6,32 +6,42 @@ function getRow($currency_from, $currency_to, $amount){
   global $wf;
 
   // build URL
-  $url = "http://rate-exchange.appspot.com/currency?from=" . $currency_from . "&to=" . $currency_to;
+  $url = "https://api.exchangeratesapi.io/latest?base=" . $currency_from . "&symbols=" . $currency_to;
 
   // get exchange rate
-  $data_json = file_get_contents($url);
+  $options = array('http' => array('ignore_errors' => TRUE));
+  $context  = stream_context_create($options);
+  $data_json = file_get_contents($url, false, $context);
   $data = json_decode($data_json);
 
-  // Error occurec. Probabl invalid currency
-  if(isset($data->err)){
-    $subtext = "Supported currencies are: DKK, EUR, USD, SEK, GBP, CHF, AUD, NOK";
-    $wf->result(time(), $data->err, "Invalid currency", $subtext, 'icon.png');
+  // print_r($data);
 
-  // No problems
-  }else{
-    $exchange_rate = $data->rate;
-
-    $clipboard = round($exchange_rate * $amount, 1);
-    $text = round($exchange_rate * $amount, 1) . " " . $currency_to;
+  if(!isset($data->error) && getHttpCode($http_response_header) == 200){
+    $exchange_rate = $data->rates->$currency_to;
+    $clipboard = number_format($exchange_rate * $amount, 2);
+    $text = $clipboard . " " . $currency_to;
     $sub_text = $currency_from . ' to ' . $currency_to;
-
     $wf->result(time(), $clipboard, $text, $sub_text, 'icon.png');
+  } else {
+    $subtext = $data->error . " Please check if currencies are valid.";
+    $wf->result(time(), $data->err, "Could not fetch data", trim($subtext), 'icon.png');
   }
+}
+
+function getHttpCode($http_response_header)
+{
+    if(is_array($http_response_header))
+    {
+        $parts=explode(' ',$http_response_header[0]);
+        if(count($parts)>1) //HTTP/1.0 <code> <text>
+            return intval($parts[1]); //Get code
+    }
+    return 0;
 }
 
 function getWaitingRow(){
   global $wf;
-  $wf->result(time(), "Waiting for input", "Waiting for input...", "Type in like: 50USD to EUR", 'icon.png');
+  $wf->result(time(), "Waiting for input", "Waiting for input...", "Type in like: 50 USD to EUR", 'icon.png');
 }
 
 function getResult($query, $default_currency){
@@ -44,15 +54,23 @@ function getResult($query, $default_currency){
     $query
   );
 
-  // strip " to "
-  $query = str_replace(" to ", " ", $query);
+  // uppercase
+  $query = strtoupper($query);
 
-  // Uppercase and trim
-  $query = strtoupper(trim($query));
+  // strip " to "
+  $query = str_replace(" TO ", " ", $query);
+  $query = str_replace(" IN ", " ", $query);
+
+  // trim
+  $query = trim($query);
+
+  // print_r('>>> query');
+  // print_r($query);
 
   // parse query
-  preg_match("/^(\d+)([A-Z]{3})\s?([A-Z]{3})?$/", $query, $matches);
+  preg_match("/^(\d+)\s?([A-Z]{3})\s?([A-Z]{3})?$/", $query, $matches);
 
+  // print_r('>>> matches');
   // print_r($matches);
   if(!empty($matches)){
 
@@ -70,4 +88,4 @@ function getResult($query, $default_currency){
   return $wf->toxml();
 }
 
-// echo getResult("40usd $");
+// echo getResult("41 GBP", "EUR");
