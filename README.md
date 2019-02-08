@@ -18,7 +18,7 @@ And even shorter:
 
 > 30$ €
 
-All FX rates come from [fixer.io](http://fixer.io/).
+All exchange rates come from [exchangeratesapi.io](https://exchangeratesapi.io/).
 
 ## Usage
 
@@ -26,7 +26,7 @@ The alfred command is `c`, and hitting return will copy the converted currency v
 
 ## Installation
 
-[Download](https://github.com/remy/alfred-currency/raw/master/Currency%20Converter.alfredworkflow) and open the workflow file
+[Download](./Currency%20Converter.alfredworkflow) and open the workflow file.
 
 ## Requirements
 
@@ -37,5 +37,6 @@ You must installed:
 
 ## Author
 
-- [Remy sharp](https://remysharp.com)
+- Martin Zürn
+- [Remy sharp](https://remysharp.com) ([Repo](https://github.com/remy/alfred-currency))
 - Søren Louv-Jansen, [Konscript](http://www.konscript.com) ([original author](https://github.com/sqren/alfred-currency))
