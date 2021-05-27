@@ -29,6 +29,6 @@ And even shorter:
 
 ## Author
 
-- Søren Louv-Jansen
+- [Søren Louv-Jansen](https://twitter.com/sorenlouv)
 - Martin Zürn
 - [Remy sharp](https://remysharp.com)
