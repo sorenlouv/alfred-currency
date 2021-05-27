@@ -27,7 +27,7 @@ And even shorter:
  - [Alfred 2.0](http://www.alfredapp.com/) or higher
  - [Alfred PowerPack](http://www.alfredapp.com/powerpack/)
 
-## Author
+## Authors
 
 - [Søren Louv-Jansen](https://twitter.com/sorenlouv)
 - Martin Zürn
