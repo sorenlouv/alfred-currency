@@ -1,12 +1,8 @@
 <?php
-require_once('workflows.php');
-$wf = new Workflows();
 
 function getRow($currency_from, $currency_to, $amount){
-  global $wf;
-
   // build URL
-  $url = "https://api.exchangeratesapi.io/latest?base=" . $currency_from . "&symbols=" . $currency_to;
+  $url = "https://v6.exchangerate-api.com/v6/f3a28ea08292d915f7e45eee/pair/" . $currency_from . "/" . $currency_to;
 
   // get exchange rate
   $options = array('http' => array('ignore_errors' => TRUE));
@@ -14,17 +10,30 @@ function getRow($currency_from, $currency_to, $amount){
   $data_json = file_get_contents($url, false, $context);
   $data = json_decode($data_json);
 
-  // print_r($data);
 
-  if(!isset($data->error) && getHttpCode($http_response_header) == 200){
-    $exchange_rate = $data->rates->$currency_to;
-    $clipboard = number_format($exchange_rate * $amount, 2);
-    $text = $clipboard . " " . $currency_to;
-    $sub_text = $currency_from . ' to ' . $currency_to;
-    $wf->result(time(), $clipboard, $text, $sub_text, 'icon.png');
+
+  if($data->result == "success" && getHttpCode($http_response_header) == 200){
+    $exchange_rate = $data->conversion_rate;
+    $destination_amount = number_format($exchange_rate * $amount, 2);
+
+    echo json_encode([
+      "items" => [
+          [
+              "title" => $destination_amount . " " . $currency_to,
+              "subtitle" => $currency_from . ' to ' . $currency_to,
+              "arg" => $destination_amount,
+          ]
+      ]
+    ]);
+
   } else {
-    $subtext = $data->error . " Please check if currencies are valid.";
-    $wf->result(time(), $data->err, "Could not fetch data", trim($subtext), 'icon.png');
+    echo json_encode([
+      "items" => [
+          [
+              "title" => "Unsupported currency pair: " . $currency_from ." / " . $currency_to
+          ]
+      ]
+    ]);
   }
 }
 
@@ -40,12 +49,19 @@ function getHttpCode($http_response_header)
 }
 
 function getWaitingRow(){
-  global $wf;
-  $wf->result(time(), "Waiting for input", "Waiting for input...", "Type in like: 50 USD to EUR", 'icon.png');
+  echo json_encode([
+    "items" => [
+        [
+            "title" => "Waiting for input",
+            "subtitle" => "Example: 50 usd to eur",
+        ]
+    ]
+  ]);
 }
 
 function getResult($query, $default_currency){
-  global $wf;
+
+
 
   // Replace symbols
   $query = str_replace(
@@ -64,14 +80,10 @@ function getResult($query, $default_currency){
   // trim
   $query = trim($query);
 
-  // print_r('>>> query');
-  // print_r($query);
 
   // parse query
   preg_match("/^(\d+)\s?([A-Z]{3})\s?([A-Z]{3})?$/", $query, $matches);
 
-  // print_r('>>> matches');
-  // print_r($matches);
   if(!empty($matches)){
 
     $amount = $matches[1];
@@ -84,8 +96,8 @@ function getResult($query, $default_currency){
   }else{
     getWaitingRow();
   }
-
-  return $wf->toxml();
 }
 
-// echo getResult("41 GBP", "EUR");
+
+
+
