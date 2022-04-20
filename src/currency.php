@@ -2,7 +2,7 @@
 
 function getRow($currency_from, $currency_to, $amount){
   // build URL
-  $url = "https://v6.exchangerate-api.com/v6/f3a28ea08292d915f7e45eee/pair/" . $currency_from . "/" . $currency_to;
+  $url = "https://v6.exchangerate-api.com/v6/" . getenv('API_KEY') . "/pair/" . $currency_from . "/" . $currency_to;
 
   // get exchange rate
   $options = array('http' => array('ignore_errors' => TRUE));
@@ -59,7 +59,7 @@ function getWaitingRow(){
   ]);
 }
 
-function getResult($query, $default_currency){
+function getResult($query){
 
 
 
@@ -82,13 +82,13 @@ function getResult($query, $default_currency){
 
 
   // parse query
-  preg_match("/^(\d+(?:\.\d+)?)\s?([A-Z]{3})\s?([A-Z]{3})?$/", $query, $matches);
+  preg_match("/^(\d+)\s?([A-Z]{3})\s?([A-Z]{3})?$/", $query, $matches);
 
   if(!empty($matches)){
 
     $amount = $matches[1];
     $currency_from = $matches[2];
-    $currency_to = isset($matches[3]) ? $matches[3] : $default_currency;
+    $currency_to = isset($matches[3]) ? $matches[3] : getenv('DEFAULT_CURRENCY');
 
     // Initial row
     getRow($currency_from, $currency_to, $amount);
