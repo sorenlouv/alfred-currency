@@ -82,7 +82,7 @@ function getResult($query, $default_currency){
 
 
   // parse query
-  preg_match("/^(\d+(?:\.\d+)?)\s?([A-Z]{3})\s?([A-Z]{3})?$/", $query, $matches);
+  preg_match("/^([0-9]+[.][0-9]*)\s?([A-Z]{3})\s?([A-Z]{3})?$/", $query, $matches);
 
   if(!empty($matches)){
 
