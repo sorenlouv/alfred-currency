@@ -22,15 +22,18 @@ And even shorter:
 
 [Download](./Currency%20Converter.alfredworkflow) and open the workflow file.
 
-Set up api key
+Change the `DEFAULT_CURRENCY` with your own preference, if desired.
 
-1. Create an account at [https://exchangerate-api.com](https://exchangerate-api.com/)
+### (Recommended) Set up API key
+
+This will avoid some common workflow errors.
+
+1. Create a free account at [https://exchangerate-api.com](https://exchangerate-api.com/)
 2. Create an API key at [https://app.exchangerate-api.com/keys](https://app.exchangerate-api.com/keys)
-3. Open the workflow and click "Configure workflow and variables"![1650475087316.png](image/README/1650475087316.png)
+3. Open the workflow and click "Configure workflow and variables"![1650475087316.png](image/README/1-Set-Variables.png)
 4. Set up `API_KEY` with your own key
 
-   ![1650475216216.png](image/README/1650475216216.png)
-5. Optional: Change the `DEFAULT_CURRENCY` with your own preference
+   ![1650475216216.png](image/README/2-Workflow-Environment-Variables.png)
 
 ## Requirements
 
@@ -42,3 +45,4 @@ Set up api key
 - [Søren Louv-Jansen](https://twitter.com/sorenlouv)
 - Martin Zürn
 - [Remy sharp](https://remysharp.com)
+- [Brady Clarke](https://bradyclarke.com)

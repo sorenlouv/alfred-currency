@@ -30,7 +30,8 @@ function getRow($currency_from, $currency_to, $amount){
     echo json_encode([
       "items" => [
           [
-              "title" => "Unsupported currency pair: " . $currency_from ." / " . $currency_to
+              "title" => "Error: " . $currency_from ." / " . $currency_to,
+              "subtitle" => "If you have already set up your API key, this may be an unsupported currency pairing." // This seems to be the most common issue here.
           ]
       ]
     ]);

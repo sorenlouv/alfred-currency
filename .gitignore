@@ -1,1 +1,5 @@
 .DS_Store
+
+# info.plist + prefs.plist contain user preferences. Best to avoid accidental commits.
+info.plist
+prefs.plist
