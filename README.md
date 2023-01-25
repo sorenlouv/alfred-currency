@@ -24,18 +24,6 @@ And even shorter:
 
 [Download](./Currency%20Converter.alfredworkflow) and open the workflow file.
 
-## API/Rate Limits
-
-As the default API key is used by all users of this app, the amount of requests allowed per day may be depleted quickly. 
-
-Create and use your own personal API key (for free) to avoid the "`Error: Too many requests`" limit by:
-
-- Create an account at https://exchangerate-api.com
-- Create an API key at https://app.exchangerate-api.com/keys
-- Open the workflow and click "Open in Finder"
-- Open the file "currency.php" and replace the API key on line 5: `https://v6.exchangerate-api.com/v6/<YOUR-API-KEY>/pair/`
-
-
 ## Requirements
 
  - [Alfred 2.0](http://www.alfredapp.com/) or higher
