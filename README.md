@@ -10,6 +10,8 @@ Note that `in` and `to` are interchangable. The default currency is GBP (can be 
 
 > c 30USD
 
+> c $30  
+
 Another shorthand is:
 
 > c 30$ to €
