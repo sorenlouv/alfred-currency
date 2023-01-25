@@ -10,9 +10,7 @@ function getRow($currency_from, $currency_to, $amount){
   $data_json = file_get_contents($url, false, $context);
   $data = json_decode($data_json);
 
-
-
-  if($data->result == "success" && getHttpCode($http_response_header) == 200){
+  if(getHttpCode($http_response_header) == 200 && $data->result == "success"){
     $exchange_rate = $data->conversion_rate;
     $destination_amount = number_format($exchange_rate * $amount, 2);
 
@@ -26,6 +24,15 @@ function getRow($currency_from, $currency_to, $amount){
       ]
     ]);
 
+  } elseif(getHttpCode($http_response_header) == 429) {
+    echo json_encode([
+      "items" => [
+          [
+            "title" => "Error: Too many requests",
+            "subtitle" => "Try again later",
+          ]
+      ]
+    ]);
   } else {
     echo json_encode([
       "items" => [
@@ -61,8 +68,6 @@ function getWaitingRow(){
 
 function getResult($query, $default_currency){
 
-
-
   // Replace symbols
   $query = str_replace(
     array("€", "$", "£"),
@@ -81,19 +86,25 @@ function getResult($query, $default_currency){
   $query = trim($query);
 
 
-  // parse query
-  preg_match("/^([0-9]+[.]?[0-9]*?)\s?([A-Z]{3})\s?([A-Z]{3})?$/", $query, $matches);
+  // If a query contains a quantity with currency after the amount, and/or with a "to" currency specified
+  preg_match("/^([0-9]+[.]?[0-9]*?)\s?([A-Z]{3})\s?([A-Z]{3})?$/", $query, $match_a_f_t);
 
-  if(!empty($matches)){
+  // If a query contains only one quantity with the currency before the amount. E.g "$200" or "USD 200"
+  preg_match("/^([A-Z]{3})\s?([0-9]+[.]?[0-9]*?)$/", $query, $match_f_a);
 
-    $amount = $matches[1];
-    $currency_from = $matches[2];
-    $currency_to = isset($matches[3]) ? $matches[3] : $default_currency;
+  if(!empty($match_a_f_t)){
 
-    // Initial row
+    $amount = $match_a_f_t[1];
+    $currency_from = $match_a_f_t[2];
+    $currency_to = isset($match_a_f_t[3]) ? $match_a_f_t[3] : $default_currency;
+
     getRow($currency_from, $currency_to, $amount);
+  } elseif(!empty($match_f_a)){
+    $currency_from = $match_f_a[1];
+    $amount = $match_f_a[2];
 
-  }else{
+    getRow($currency_from, $default_currency, $amount);
+  } else {
     getWaitingRow();
   }
 }
